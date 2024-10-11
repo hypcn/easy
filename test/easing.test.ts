@@ -1,4 +1,4 @@
-import { applyEasing, EASING_FN, EASING_ID } from '../src';  // replace 'yourFile' with the file where applyEasing and EASING_ID are defined
+import { applyEasing, EASING_FN, EASING_ID } from '../src';
 
 const duration = 1000;
 const time = 150;
