@@ -1,7 +1,7 @@
 
 # Easy
 
-Easing functions. Initially created to apply DMX lighting transitions.
+Easing functions. Initially created to apply DMX lighting transitions. Includes TypeScript types.
 
 ![npm (scoped)](https://img.shields.io/npm/v/@hypericon/easy)
 
