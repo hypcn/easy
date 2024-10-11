@@ -9,10 +9,34 @@ Easing functions. Initially created to apply DMX lighting transitions.
 npm i @hypericon/easy
 ```
 
-# Usage
+# Example Usage 
 
-TODO
+```ts
+import { applyEasing, EASING_ID, EasingFnIdsVL } from '@hypericon/easy';
+
+const from = 0;
+const to = 200;
+const duration = 100;
+const easingFnId = EASING_ID.inOutCubic;
+const easingName = EasingFnIdsVL.find(vl => vl.value === easingFnId)?.label ?? "[unknown]";
+
+console.log(`Ease from ${from} to ${to} over ${duration} steps using ${easingName}`);
+
+for (let t = 0; t <= duration; t++) {
+  const v = applyEasing(easingFnId, duration, t, from, to);
+  console.log(`t: ${t}, v: ${v}`);
+}
+```
 
 # Development
 
+```sh
+# Start a `tsc` process watching the source
+npm run dev
 
+# Run tests
+npm run test
+
+# Build for publishing. Runs automatically before `npm publish`
+npm run build
+```
