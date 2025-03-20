@@ -28,6 +28,21 @@ for (let t = 0; t <= duration; t++) {
 }
 ```
 
+Additionally, a function is defined to easily enable mapping values within a range using an easing function.
+
+```ts
+import { easeWithinRange, EASING_ID, EasingFnIdsVL } from '@hypericon/easy';
+
+const rangeStart = 20;
+const rangeEnd = 120;
+const value = 55;
+const easingFnId = EASING_ID.inOutCubic;
+
+const mapped = easeWithinRange(easingFnId, value, rangeStart, rangeEnd);
+
+console.log(`Map value ${value} within range ${rangeStart} to ${rangeEnd} using easing function id ${easingFnId}: ${mapped}`);
+```
+
 # Development
 
 ```sh
