@@ -1,4 +1,4 @@
-import { applyEasing, EASING_FN, EASING_ID } from '../src';
+import { applyEasing, EASING_FN, EASING_ID, easeWithinRange } from '../src';
 
 const duration = 1000;
 const time = 150;
@@ -220,3 +220,81 @@ describe('applyEasing edge cases', () => {
 
 });
 
+describe("easeWithinRange", () => {
+
+  it("should ease within a given range", () => {
+    const value = 25;
+    const start = 0;
+    const end = 100;
+    const result = easeWithinRange(EASING_ID.inOutSine, value, start, end);
+    const expected = EASING_FN.inOutSine(value, start, end - start, end - start);
+    expect(result).toEqual(expected);
+  });
+
+  it("should handle value less than start", () => {
+    const value = -25;
+    const start = 0;
+    const end = 100;
+    const result = easeWithinRange(EASING_ID.inOutSine, value, start, end);
+    const expected = EASING_FN.inOutSine(0, start, end - start, end - start);
+    expect(result).toEqual(expected);
+  });
+
+  it("should handle value greater than end", () => {
+    const value = 125;
+    const start = 0;
+    const end = 100;
+    const result = easeWithinRange(EASING_ID.inOutSine, value, start, end);
+    const expected = EASING_FN.inOutSine(end, start, end - start, end - start);
+    expect(result).toEqual(expected);
+  });
+
+  it("should handle start greater than end", () => {
+    const value = 25;
+    const start = 100;
+    const end = 0;
+    const result = easeWithinRange(EASING_ID.inOutSine, value, start, end);
+    const sortedStart = Math.min(start, end);
+    const sortedEnd = Math.max(start, end);
+    const expected = EASING_FN.inOutSine(value, sortedStart, sortedEnd - sortedStart, sortedEnd - sortedStart);
+    expect(result).toEqual(expected);
+  });
+
+  it("should handle negative start and end", () => {
+    const value = -25;
+    const start = -100;
+    const end = -50;
+    const result = easeWithinRange(EASING_ID.inOutSine, value, start, end);
+    const expected = EASING_FN.inOutSine(0, start, end - start, end - start);
+    expect(result).toEqual(expected);
+  });
+
+  it("should handle NaN value", () => {
+    const value = NaN;
+    const start = 0;
+    const end = 100;
+    const result = easeWithinRange(EASING_ID.inOutSine, value, start, end);
+    const expected = EASING_FN.inOutSine(0, start, end - start, end - start);
+    expect(result).toEqual(expected);
+  });
+
+  it("should handle NaN start and end", () => {
+    const value = 25;
+    const start = NaN;
+    const end = NaN;
+    const result = easeWithinRange(EASING_ID.inOutSine, value, start, end);
+    const expected = EASING_FN.inOutSine(value, 0, 0, 0);
+    expect(result).toEqual(expected);
+  });
+
+  it("should handle invalid easing function ID", () => {
+    const value = 25;
+    const start = 0;
+    const end = 100;
+    const easingFnId = 'invalidId' as keyof typeof EASING_ID;
+    const result = easeWithinRange(easingFnId, value, start, end);
+    const expected = EASING_FN.linear(value, start, end - start, end - start);
+    expect(result).toEqual(expected);
+  });
+
+});

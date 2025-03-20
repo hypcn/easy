@@ -115,6 +115,23 @@ export function applyEasing(easingFnId: keyof typeof EASING_ID, duration: number
 }
 
 /**
+ * Ease a value within a given range
+ * @param easingFnId The ID of the easing function to apply. Invalid values fall back to "linear"
+ * @param value The value to ease
+ * @param rangeStart The start of the range within which to ease the value - the lower value of the range
+ * @param rangeEnd The end of the range within which to ease the value - the higher value of the range
+ * @returns The eased value
+ */
+export function easeWithinRange(easingFnId: keyof typeof EASING_ID, value: number, rangeStart: number, rangeEnd: number): number {
+
+  const start = Math.min(rangeStart, rangeEnd);
+  const end = Math.max(rangeStart, rangeEnd);
+
+  return applyEasing(easingFnId, end - start, value, start, end);
+
+}
+
+/**
  * Raw easing function definitions.
  * 
  * All defined as:
